@@ -26,16 +26,13 @@ class DvdController extends Controller {
         $query = new DvdQuery();
         $dvds = $query->search($request->input('title'), $request->input('genre'), $request->input('rating'));
         //dd($dvds);
-//        if (($request->input('title')) != null){
-//            return view('dvd_results', [
-//                'title'=>$request->input('title'),
-//                'dvds'=> $dvds
-//            ]);
-//        } else {
-//            return view('dvd_results', [
-//                'dvds'=> $dvds
-//            ]);
-//        }
+        if (!$request->input('title')){
+            $dvds = (new DvdQuery())->search('', 'All', 'All');
+            return view('dvd_results', [
+                'title'=>'',
+                'dvds'=> $dvds
+            ]);
+        }
         return view('dvd_results', [
                'title'=>$request->input('title'),
                 'dvds'=> $dvds
