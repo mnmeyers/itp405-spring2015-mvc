@@ -12,6 +12,7 @@ class DvdQuery {
     public function search($term, $genre, $rating)
     {
         $query = DB::table('dvds')
+            ->select('*', 'dvds.id AS id')
             ->join('genres', 'genres.id', '=', 'dvds.genre_id')
             ->join('ratings', 'ratings.id', '=', 'dvds.rating_id')
             ->join('formats', 'formats.id', '=', 'dvds.format_id')
@@ -46,6 +47,28 @@ class DvdQuery {
     {
         $query = DB::table('ratings')
             ->orderBy('rating_name')
+            ->get();
+        return $query;
+    }
+
+    public function dvdDetails($id)
+    {
+        $query = DB::table('dvds')
+            ->select('*', 'dvds.id AS id')
+            ->where('dvds.id', '=', $id)
+            ->join('genres', 'genres.id', '=', 'dvds.genre_id')
+            ->join('ratings', 'ratings.id', '=', 'dvds.rating_id')
+            ->join('formats', 'formats.id', '=', 'dvds.format_id')
+            ->join('labels', 'labels.id', '=', 'dvds.label_id')
+            ->join('sounds', 'sounds.id', '=', 'dvds.sound_id')
+            ->get();
+        return $query;
+    }
+
+    public function dvdReviews($id)
+    {
+        $query = DB::table('reviews')
+            ->where('dvd_id','=', $id)
             ->get();
         return $query;
     }

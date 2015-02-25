@@ -7,6 +7,7 @@
  */
 namespace App\Http\Controllers;
 use App\Models\DvdQuery;
+use App\Models\review_validate;
 use Illuminate\Http\Request;
 use DB;
 
@@ -25,7 +26,7 @@ class DvdController extends Controller {
     {
         $query = new DvdQuery();
         $dvds = $query->search($request->input('title'), $request->input('genre'), $request->input('rating'));
-        //dd($dvds);
+
         if (!$request->input('title')){
             $dvds = (new DvdQuery())->search('', 'All', 'All');
             return view('dvd_results', [
@@ -37,6 +38,48 @@ class DvdController extends Controller {
                'title'=>$request->input('title'),
                 'dvds'=> $dvds
             ]);
+
+    }
+    public function reviews($id){
+        $query = new DvdQuery();
+        $dvdDetails = $query->dvdDetails($id);
+        $dvdReviews = $query->dvdReviews($id);
+        return view('reviews',[
+        'dvdDetails'=> $dvdDetails,
+        'dvdReviews'=> $dvdReviews]);
+    }
+//don't understand the point of this?
+//    public function create()
+//    {
+//        $artists = DB::table('dvds')->get();
+//        $genres = DB::table('genres')->get();//get returns all the records
+//        return view('songform', [
+//            'artists'=>$artists,
+//            'genres' =>$genres
+//        ]);
+//    }
+
+
+    public function storeReview(Request $request)
+    {
+        $validation = review_validate::validate($request->all());
+
+        if ($validation->passes()) {
+            //insert record into db
+            review_validate::create([
+                'title' => $request->input('review_title'),
+                'rating' => $request->input('rating'),
+                'dvd_id' => $request->input('dvd_id'),
+                'description' => $request->input('review')
+            ]);
+            //redirect back to /songs/new
+            return redirect('/dvds/'.$request->input('dvd_id'))->with('success', 'Review successfully saved!');
+        } else {
+            //redirect to /songs/new with error messages and old input
+            return redirect('/dvds/'.$request->input('dvd_id'))
+                ->withInput()
+                ->withErrors($validation); //this is flash messaging...
+        }
 
     }
 }

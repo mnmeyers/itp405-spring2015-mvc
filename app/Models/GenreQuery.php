@@ -19,3 +19,4 @@ class GenreQuery {
         return $query;
     }
 }
+//is this page even necessary?
