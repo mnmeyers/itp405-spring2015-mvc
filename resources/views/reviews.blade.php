@@ -82,7 +82,7 @@
 
             <div class="form-group">
                 <label>Your Review:</label>
-                <textarea class="form-control" name="review" value="{{{Request::old('review')}}}"></textarea>
+                <textarea class="form-control" name="review">{{{Request::old('review')}}}</textarea>
             </div>
             <a name="addreview"></a>
             <button type="submit" class="btn btn-default">Add Review</button>

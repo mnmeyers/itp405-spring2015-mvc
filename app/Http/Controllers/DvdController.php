@@ -48,17 +48,6 @@ class DvdController extends Controller {
         'dvdDetails'=> $dvdDetails,
         'dvdReviews'=> $dvdReviews]);
     }
-//don't understand the point of this?
-//    public function create()
-//    {
-//        $artists = DB::table('dvds')->get();
-//        $genres = DB::table('genres')->get();//get returns all the records
-//        return view('songform', [
-//            'artists'=>$artists,
-//            'genres' =>$genres
-//        ]);
-//    }
-
 
     public function storeReview(Request $request)
     {
