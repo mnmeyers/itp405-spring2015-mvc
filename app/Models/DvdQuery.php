@@ -7,8 +7,9 @@
  */
 namespace App\Models;
 use DB;
+//use Illuminate\Database\Eloquent\Model;
 
-class DvdQuery {
+class DvdQuery /*extends Model*/{
     public function search($term, $genre, $rating)
     {
         $query = DB::table('dvds')
@@ -73,6 +74,9 @@ class DvdQuery {
         return $query;
     }
 
+//    public function dvds(){
+//        return $this->hasMany('App\Models\Song');//requires the namespace.
+//    }
 }
 
 

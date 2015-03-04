@@ -13,6 +13,14 @@
 
 Route::get('/', 'WelcomeController@index');
 Route::get('/dvds/search', 'DvdController@search');
+////the below route may cause a conflict
 Route::get('/dvds', 'DvdController@results');
-Route::get('/dvds/{id}', 'DvdController@reviews');
-Route::post('/dvds/submit', 'DvdController@storeReview');
+//you can use the same url multiple times as long as it's different verbs
+//Route::get('/dvds/{id}', 'DvdController@reviews');
+//Route::post('/dvds/submit', 'DvdController@storeReview');
+
+//start mar 3 hw
+Route::get('/dvds/create' , 'DvdControllers@createDvd');
+Route::post('/dvds', 'DvdControllers@storeDvd');
+
+Route::get('/genres/{name}/dvds', 'DvdControllers@displayGenres');

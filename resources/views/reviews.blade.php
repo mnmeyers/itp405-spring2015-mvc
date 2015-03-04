@@ -1,4 +1,6 @@
 @extends('layout')
+@section('page_title')Add Review
+@stop
 @section('content')
     <?php $dvd = $dvdDetails[0]; ?>
 <h1>{{{$dvd->title}}}</h1>
