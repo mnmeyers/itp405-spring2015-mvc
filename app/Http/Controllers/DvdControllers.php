@@ -77,7 +77,7 @@ class DvdControllers extends Controller {
         public function displayGenres($name){
             //needs to eagerly load rating, genre, and label
             $dvds = Dvd::with('genre')
-                ->whereHas('genre', function($query) use ($name){ //use only looks for one scope above
+                ->whereHas('genre', function($query) use ($name){
                     $query->where('genre_name', '=', $name);
 
                 })
