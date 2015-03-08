@@ -18,12 +18,12 @@ Route::get('/dvds', 'DvdController@results');
 //you can use the same url multiple times as long as it's different verbs
 
 //why do these two conflict with the next two??
-Route::get('/dvds/{id}', 'DvdController@reviews');
-Route::post('/dvds/submit', 'DvdController@storeReview');
+//Route::get('/dvds/{id}', 'DvdController@reviews');
+//Route::post('/dvds/submit', 'DvdController@storeReview');
 
 //start mar 3 hw
-//Route::get('/dvds/create' , 'DvdControllers@createDvd');
-//Route::post('/dvds', 'DvdControllers@storeDvd');
+Route::get('/dvds/create' , 'DvdControllers@createDvd');
+Route::post('/dvds', 'DvdControllers@storeDvd');
 
 Route::get('/genres/{name}/dvds', 'DvdControllers@displayGenres');
 
