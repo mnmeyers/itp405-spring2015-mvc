@@ -8,7 +8,6 @@
 namespace App\Http\Controllers;
 //use App\Models\Song;
 //use App\Models\Artist;
-
 use App\Models\DvdQuery;
 use App\Models\review_validate;
 use Illuminate\Http\Request;
@@ -20,10 +19,10 @@ class DvdController extends Controller {
         $dvdQuery = new DvdQuery();
         $genres = $dvdQuery->searchGenre();
         $ratings = $dvdQuery->searchRating();
-       return view('dvd_search',[
+        return view('dvd_search',[
             'genres'=> $genres,
             'ratings'=>$ratings
-            ]);
+        ]);
     }
     public function results(Request $request)
     {
@@ -39,25 +38,22 @@ class DvdController extends Controller {
             ]);
         }
         return view('dvd_results', [
-               'title'=>$request->input('title'),
+            'title'=>$request->input('title'),
             'genres'=> $genres,
-                'dvds'=> $dvds
-            ]);
-
+            'dvds'=> $dvds
+        ]);
     }
     public function reviews($id){
         $query = new DvdQuery();
         $dvdDetails = $query->dvdDetails($id);
         $dvdReviews = $query->dvdReviews($id);
         return view('reviews',[
-        'dvdDetails'=> $dvdDetails,
-        'dvdReviews'=> $dvdReviews]);
+            'dvdDetails'=> $dvdDetails,
+            'dvdReviews'=> $dvdReviews]);
     }
-
     public function storeReview(Request $request)
     {
         $validation = review_validate::validate($request->all());
-
         if ($validation->passes()) {
             //insert record into db
             review_validate::create([
@@ -74,7 +70,33 @@ class DvdController extends Controller {
                 ->withInput()
                 ->withErrors($validation); //this is flash messaging...
         }
-
     }
 
+//    public function displayTomatoes($title = 'Harry+Potter')
+//    {
+//
+//        if (Cache::has("{dvd}-$title")) {
+//            $json_string = Cache::get("{dvd}-$title");
+//            //echo('cached!');
+//        } else {
+//
+//            $url = "http://api.rottentomatoes.com/api/public/v1.0/movies.json?page=1&apikey=7ns39f9m6jenae7bkmvzpgtb&q=$title";
+//            //the ? makes it optional in laravel
+//            $session = curl_init($url);
+//            curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+//            $json_string = curl_exec($session);
+//            curl_close($session);
+//            //$json_string = file_get_contents($url);//will read it out as a string and then you have access to it. let's convert to json
+//            //need to convert it into arrays and objects.
+//            Cache::put("{dvd}-$title", $json_string, 60);//3rd argument is minutes
+//            //echo('Not cached!');
+//        }
+//
+//        $rottentomatoesData = json_decode($json_string);
+//        //curl is another library for http requests from php. post, put and delete.
+//    //var_dump($rottentomatoesData);
+//        return view('rottenT', [
+//            'rottentomatoes' => $rottentomatoesData->movies
+//        ]);
+//    }
 }

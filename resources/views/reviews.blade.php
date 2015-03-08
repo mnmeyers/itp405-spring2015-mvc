@@ -3,7 +3,7 @@
 @stop
 @section('content')
     <?php $dvd = $dvdDetails[0]; ?>
-<h1>{{{$dvd->title}}}</h1>
+    <h1>{{{$dvd->title}}}</h1>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -42,11 +42,11 @@
         </thead>
         <tbody>
         @foreach($dvdReviews as $review)
-        <tr>
-            <td>{{{$review->title}}}</td>
-            <td>{{{$review->rating}}}</td>
-            <td>{{{$review->description}}}</td>
-        </tr>
+            <tr>
+                <td>{{{$review->title}}}</td>
+                <td>{{{$review->rating}}}</td>
+                <td>{{{$review->description}}}</td>
+            </tr>
         @endforeach
         </tbody>
     </table>
@@ -57,7 +57,7 @@
             <p>{{$errorMessage}}</p>
         @endforeach
         @if(Session::has('success'))
-        <p>{{{Session::get('success')}}}</p>
+            <p>{{{Session::get('success')}}}</p>
         @endif
         <form method="post" action={{{url("/dvds/submit")}}}>
             <input type="hidden" name="_token" value="{{{csrf_token()}}}">
@@ -69,8 +69,8 @@
                     <?php $selectRating =  array('1', '2', '3', '4', '5', '6', '7', '8', '9', '10');?>
                     @foreach ($selectRating as $select)
                         @if ($select == Request::old('rating'))
-                    <option value ="{{{$select}}}" selected="1">{{{$select}}}</option>
-                            @else
+                            <option value ="{{{$select}}}" selected="1">{{{$select}}}</option>
+                        @else
                             <option value ="{{{$select}}}">{{{$select}}}</option>
                         @endif
                     @endforeach
