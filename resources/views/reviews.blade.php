@@ -2,7 +2,7 @@
 @section('page_title')Add Review
 @stop
 @section('content')
-    <?php $dvd = $dvdDetails[0]; ?>
+    <?php// $dvd = $dvdDetails[0]; ?>
     <h1>{{{$dvd->title}}}</h1>
     <table class="table table-striped">
         <thead>
@@ -44,7 +44,7 @@
         @foreach($dvdReviews as $review)
             <tr>
                 <td>{{{$review->title}}}</td>
-                <td>{{{$review->rating}}}</td>
+                <td>{{{$review->rating}}}/10</td>
                 <td>{{{$review->description}}}</td>
             </tr>
         @endforeach
@@ -90,4 +90,34 @@
             <button type="submit" class="btn btn-default">Add Review</button>
         </form>
     </div>
+
+@if($tomato->title === $dvd->title)
+        <h3>{{$tomato->title}} Reviews by Rotten Tomatoes</h3>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>{{$tomato->title}}</th>
+                <th>Critics' Score</th>
+                <th>Audience Score</th>
+                <th>Movie Runtime</th>
+                <th>Cast</th>
+            </tr>
+            </thead>
+            <tbody>
+
+
+            <tr>
+                <td><img src="{{$tomato->posters->thumbnail}}"></td>
+                <td>{{{$tomato->ratings->critics_score}}}/100</td>
+                <td>{{{$tomato->ratings->audience_score}}}/100</td>
+                <td>{{$tomato->runtime}} Minutes</td><td>
+                    @foreach ($tomato->abridged_cast as $castMember)
+                        {{$castMember->name}}<br>
+                    @endforeach
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+    @endif
 @stop

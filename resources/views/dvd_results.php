@@ -44,7 +44,7 @@
         <th>Sound</th>
         <th>Format</th>
         <th>Release Date</th>
-<!--        <th>Review</th>-->
+        <th>Review</th>
     </tr>
     </thead>
     <tbody>
@@ -59,7 +59,7 @@
             <td><?php echo $dvd->sound_name ?></td>
             <td><?php echo $dvd->format_name ?></td>
             <td><?php echo DATE_FORMAT(new DateTime($dvd->release_date), 'M j, Y') ?></td>
-<!--            <td><a href="dvds/--><?php //echo $id ?><!--">Add Review</a></td>-->
+            <td><a href="dvds/<?php echo $id ?>">Add Review</a></td>
         </tr>
     <?php endforeach ?>
     </tbody>

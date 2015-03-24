@@ -66,17 +66,14 @@ class DvdQuery /*extends Model*/{
         return $query;
     }
 
-    public function dvdReviews($id)
+    public function dvdReviews($title)
     {
         $query = DB::table('reviews')
-            ->where('dvd_id','=', $id)
+            ->where('dvd_id','=', $title)//how do I pass it the id if the other ones are getting passed a title?
             ->get();
         return $query;
     }
 
-//    public function dvds(){
-//        return $this->hasMany('App\Models\Song');//requires the namespace.
-//    }
 }
 
 

@@ -12,6 +12,8 @@ use App\Models\DvdQuery;
 use App\Models\review_validate;
 use Illuminate\Http\Request;
 use DB;
+use Cache;
+use App\Services\RottenTomatoes;
 
 class DvdController extends Controller {
     public function search()
@@ -43,14 +45,21 @@ class DvdController extends Controller {
             'dvds'=> $dvds
         ]);
     }
+
     public function reviews($id){
+
         $query = new DvdQuery();
         $dvdDetails = $query->dvdDetails($id);
         $dvdReviews = $query->dvdReviews($id);
+        //dd($dvdDetails);
+        $dvd = $dvdDetails[0];
+        //$newTitle = str_replace(' ','+', $dvdDetails->title);
         return view('reviews',[
-            'dvdDetails'=> $dvdDetails,
-            'dvdReviews'=> $dvdReviews]);
+            'dvd'=> $dvd,
+            'dvdReviews'=> $dvdReviews,
+            'tomato' => RottenTomatoes::search(str_replace(' ','+', $dvd->title))]);
     }
+
     public function storeReview(Request $request)
     {
         $validation = review_validate::validate($request->all());
@@ -74,29 +83,8 @@ class DvdController extends Controller {
 
 //    public function displayTomatoes($title = 'Harry+Potter')
 //    {
-//
-//        if (Cache::has("{dvd}-$title")) {
-//            $json_string = Cache::get("{dvd}-$title");
-//            //echo('cached!');
-//        } else {
-//
-//            $url = "http://api.rottentomatoes.com/api/public/v1.0/movies.json?page=1&apikey=7ns39f9m6jenae7bkmvzpgtb&q=$title";
-//            //the ? makes it optional in laravel
-//            $session = curl_init($url);
-//            curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
-//            $json_string = curl_exec($session);
-//            curl_close($session);
-//            //$json_string = file_get_contents($url);//will read it out as a string and then you have access to it. let's convert to json
-//            //need to convert it into arrays and objects.
-//            Cache::put("{dvd}-$title", $json_string, 60);//3rd argument is minutes
-//            //echo('Not cached!');
-//        }
-//
-//        $rottentomatoesData = json_decode($json_string);
-//        //curl is another library for http requests from php. post, put and delete.
-//    //var_dump($rottentomatoesData);
 //        return view('rottenT', [
-//            'rottentomatoes' => $rottentomatoesData->movies
+//            'rottentomatoes' => RottenTomatoes::search($title)
 //        ]);
 //    }
 }
