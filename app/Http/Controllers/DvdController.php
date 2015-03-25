@@ -47,17 +47,25 @@ class DvdController extends Controller {
     }
 
     public function reviews($id){
-
         $query = new DvdQuery();
         $dvdDetails = $query->dvdDetails($id);
         $dvdReviews = $query->dvdReviews($id);
-        //dd($dvdDetails);
         $dvd = $dvdDetails[0];
-        //$newTitle = str_replace(' ','+', $dvdDetails->title);
+        $tomatoTruth = RottenTomatoes::search(str_replace(' ','+', $dvd->title));
+//        if($tomatoTruth){
+//            return view('reviews',[
+//                'dvd'=> $dvd,
+//                'dvdReviews'=> $dvdReviews,
+//                'tomato' => $tomatoTruth]);
+//        }else {
+//            return view('reviews',[
+//                'dvd'=> $dvd,
+//                'dvdReviews'=> $dvdReviews]);
+//        }
         return view('reviews',[
-            'dvd'=> $dvd,
-            'dvdReviews'=> $dvdReviews,
-            'tomato' => RottenTomatoes::search(str_replace(' ','+', $dvd->title))]);
+                'dvd'=> $dvd,
+                'dvdReviews'=> $dvdReviews,
+                'tomato' => $tomatoTruth]);
     }
 
     public function storeReview(Request $request)

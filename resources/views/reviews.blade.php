@@ -91,7 +91,7 @@
         </form>
     </div>
 
-@if($tomato->title === $dvd->title)
+@if($tomato && $tomato->title === $dvd->title)
         <h3>{{$tomato->title}} Reviews by Rotten Tomatoes</h3>
         <table class="table table-striped">
             <thead>

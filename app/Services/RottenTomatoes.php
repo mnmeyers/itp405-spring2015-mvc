@@ -38,6 +38,7 @@ class RottenTomatoes {
         //dd($rottentomatoesData->movies);
         $tomatoes = $rottentomatoesData->movies;
         foreach ($tomatoes as $tomato) {
+
             return $tomato;
         }
     }
